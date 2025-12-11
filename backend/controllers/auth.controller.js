@@ -158,12 +158,12 @@ export const refreshToken = async (req, res) => {
 
     res.cookie("access_token", access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "productoin",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 15 * 60 * 1000,
     });
 
-    res.status(200).json("Token refreshed successfully");
+    res.status(200).json({ messages: "Token refreshed successfully" });
   } catch (error) {
     console.log("Error in refreshToken controller:", error.message);
     res.status(500).json({ message: "Internal server error" });

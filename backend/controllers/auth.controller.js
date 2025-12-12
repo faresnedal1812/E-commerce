@@ -169,3 +169,5 @@ export const refreshToken = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// TODO: implementation of getProfile controller

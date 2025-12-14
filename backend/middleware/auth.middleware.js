@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const access_token = req.cookie.access_token;
+    const access_token = req.cookies.access_token;
     if (!access_token) {
       return res
         .status(401)
@@ -12,7 +12,7 @@ export const protectRoute = async (req, res, next) => {
 
     try {
       const decoded = jwt.verify(access_token, process.env.ACCESS_TOKEN_SECRET);
-      const user = await User.findById(decoded.userId);
+      const user = await User.findById(decoded.userId).select("-password");
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -30,7 +30,7 @@ export const protectRoute = async (req, res, next) => {
       throw error;
     }
   } catch (error) {
-    console.log("Error in protectRoute middleware:", error.messaeg);
+    console.log("Error in protectRoute middleware:", error.message);
     return res.status(500).json({ message: "Invalid access token" });
   }
 };

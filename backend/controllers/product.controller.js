@@ -105,6 +105,7 @@ export const getRecommendedProducts = async (req, res) => {
 };
 
 export const getProductsByCategory = async (req, res) => {
+  const { category } = req.params;
   try {
     const products = await Product.find({ category });
     res.status(200).json(products);
@@ -115,7 +116,7 @@ export const getProductsByCategory = async (req, res) => {
 };
 
 export const toggleFeaturedProducts = async (req, res) => {
-  const { productId } = req.params;
+  const productId = req.params.id;
   try {
     const product = await Product.findById(productId);
     if (product) {

@@ -107,7 +107,7 @@ export const CheckoutSuccess = async (req, res) => {
         quantity: product.quantity,
         price: product.price,
       })),
-      totalAmount: session.totalAmount / 100,
+      totalAmount: session.amount_total / 100,
       stripeSessionId: sessionId,
     });
 

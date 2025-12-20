@@ -38,8 +38,10 @@ export const getDailySalesData = async (startDate, endDate) => {
     const dailySalesData = await Order.aggregate([
       {
         $match: {
-          $gte: startDate,
-          $lte: endDate,
+          createdAt: {
+            $gte: startDate,
+            $lte: endDate,
+          },
         },
       },
       {

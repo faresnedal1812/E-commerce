@@ -12,7 +12,7 @@ export const useUserStore = create((set, get) => ({
 
     if (password !== confirmPassword) {
       set({ loading: false });
-      return toast.error("Password do not match");
+      return toast.error("Passwords do not match");
     }
 
     try {
@@ -43,7 +43,7 @@ export const useUserStore = create((set, get) => ({
       set({ user: null });
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "An error aoccurred during logout"
+        error.response?.data?.message || "An error occurred during logout"
       );
     }
   },

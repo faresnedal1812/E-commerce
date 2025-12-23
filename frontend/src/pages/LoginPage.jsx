@@ -97,7 +97,7 @@ const LoginPage = () => {
               ) : (
                 <>
                   <LogIn className="mr-2 w-5 h-5" aria-hidden="true" />
-                  Sign up
+                  Log in
                 </>
               )}
             </button>
@@ -105,7 +105,7 @@ const LoginPage = () => {
           <p className="mt-8 text-center text-sm text-gray-400">
             Not a member?{" "}
             <Link
-              to={"/login"}
+              to={"/signup"}
               className="font-medium text-emerald-400 hover:text-emerald-300"
             >
               SignUp here <ArrowRight className="inline w-4 h-4" />

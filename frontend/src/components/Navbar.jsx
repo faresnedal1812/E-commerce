@@ -1,10 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Lock, LogIn, LogOut, ShoppingCart, UserPlus } from "lucide-react";
+import { useUserStore } from "./../stores/useUserStore";
 
 const Navbar = () => {
-  const user = false;
-  const isAdmin = true;
+  const { user, logout } = useUserStore();
+  const isAdmin = user?.role === "admin";
+
+  const navigate = useNavigate();
+
   return (
     <div className="fixed top-0 left-0 bg-gray-900 z-40 bg-opacity-90 backdrop-blur-md transition-all shadow-lg border-b border-emerald-800 w-full duration-300">
       <div className="container mx-auto px-4 py-3">
@@ -44,7 +48,13 @@ const Navbar = () => {
             )}
 
             {user ? (
-              <button className="text-white bg-gray-700 hover:bg-gray-600 rounded-lg px-3 py-1 font-medium transition duration-300 ease-in-out flex items-center">
+              <button
+                onClick={async () => {
+                  await logout();
+                  navigate("/login");
+                }}
+                className="text-white bg-gray-700 hover:bg-gray-600 rounded-lg px-3 py-1 font-medium transition duration-300 ease-in-out flex items-center"
+              >
                 <LogOut className="inline-block mr-2" size={18} />
                 <span>Log out</span>
               </button>

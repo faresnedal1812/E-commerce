@@ -74,6 +74,7 @@ export const deleteProduct = async (req, res) => {
     }
 
     await Product.findByIdAndDelete(productId);
+    res.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.log("Error in deleteProduct controller:", error.message);
     res.status(500).json({ message: "Internal server error" });

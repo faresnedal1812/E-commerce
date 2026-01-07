@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CategoryItem from "../components/CategoryItem";
+import { useProductStore } from "../stores/useProductStore";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
   { href: "/bags", name: "Bags", imageURL: "/bags.jpg" },
@@ -12,6 +14,13 @@ const categories = [
 ];
 
 function HomePage() {
+  const { fetchFeaturedProducts, products, loading } = useProductStore();
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, [fetchFeaturedProducts]);
+
+  console.log(products);
   return (
     <div className="min-h-screen overflow-hidden text-white">
       <div className="px-4 sm:px-6 lg:px-8 py-16 max-w-7xl mx-auto w-full">
@@ -22,12 +31,16 @@ function HomePage() {
           Discover the latest trends in eco-friendly fashion
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
           {categories.map((category) => (
             <CategoryItem key={category.name} category={category} />
           ))}
         </div>
       </div>
+
+      {!loading && products.length > 0 && (
+        <FeaturedProducts featuredProducts={products} />
+      )}
     </div>
   );
 }

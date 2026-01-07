@@ -8,7 +8,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { motion } from "framer-motion";
 
 const PurchaseSuccessPage = () => {
-  const [isPorcessing, setIsProcessing] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(true);
   const { clearCart } = useCartStore();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const PurchaseSuccessPage = () => {
     }
   }, [clearCart]);
 
-  if (isPorcessing) return <LoadingSpinner />;
+  if (isProcessing) return <LoadingSpinner />;
 
   return (
     <div className="h-screen flex items-center justify-center px-4">

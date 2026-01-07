@@ -26,18 +26,18 @@ const AnalyticsTab = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAnalyistData = async () => {
+    const fetchAnalyticsData = async () => {
       try {
         const response = await axios.get("/analytics");
         setAnalyticsData(response.data.analyticsData);
         setDailySalesData(response.data.dailySalesData);
       } catch (error) {
-        console.log("Error fetching analyist data", error);
+        console.log("Error fetching analytics data", error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchAnalyistData();
+    fetchAnalyticsData();
   }, []);
 
   if (isLoading)

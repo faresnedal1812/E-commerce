@@ -73,7 +73,7 @@ export const createCheckoutSession = async (req, res) => {
       await createNewCoupon(req.user._id);
     }
 
-    res.status(200).json({ id: session.id, totalAmount: totalAmount / 100 });
+    res.status(200).json({ url: session.url, totalAmount: totalAmount / 100 });
   } catch (error) {
     console.log("Error in createCheckoutSession controller:", error.message);
     res.status(500).json({ message: "Internal server error" });
@@ -103,7 +103,7 @@ export const CheckoutSuccess = async (req, res) => {
     const newOrder = new Order({
       userId: session.metadata.userId,
       products: products.map((product) => ({
-        product: product.is,
+        product: product.id,
         quantity: product.quantity,
         price: product.price,
       })),
@@ -140,7 +140,7 @@ async function createNewCoupon(userId) {
   const newCoupon = new Coupon({
     code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
     discountPercentage: 10,
-    expirationDate: new Date(Date.now() * 30 * 24 * 60 * 60 * 1000), // 30 days from now
+    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
     userId,
   });
 

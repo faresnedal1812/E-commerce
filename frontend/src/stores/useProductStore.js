@@ -36,6 +36,35 @@ export const useProductStore = create((set, get) => ({
     }
   },
 
+  getProductsByCategory: async (category) => {
+    set({ loading: true });
+
+    try {
+      const res = await axios.get(`/products/category/${category}`);
+      set({
+        loading: false,
+        products: res.data,
+      });
+    } catch (error) {
+      set({ loading: false });
+      toast.error(error.response?.data?.message);
+    }
+  },
+
+  fetchFeaturedProducts: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get(`/products/featured`);
+      set({
+        loading: false,
+        products: res.data,
+      });
+    } catch (error) {
+      set({ loading: false });
+      toast.error(error.response?.data?.message);
+    }
+  },
+
   deleteProduct: async (productId) => {
     set({ loading: true });
 

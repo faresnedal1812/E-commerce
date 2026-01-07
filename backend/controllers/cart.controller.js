@@ -15,7 +15,7 @@ export const getCartProducts = async (req, res) => {
 
     const cartItems = products.map((product) => {
       const item = req.user.cartItems.find(
-        (item) => item.product.toString() === product.id
+        (cartItem) => cartItem.product.toString() === product._id.toString()
       );
 
       return { ...product, quantity: item.quantity };
@@ -55,7 +55,7 @@ export const addToCart = async (req, res) => {
 export const removeAllFromCart = async (req, res) => {
   try {
     const user = req.user;
-    const { productId } = req.body;
+    const productId = req.body?.productId || null;
 
     if (!productId) {
       // clear all products in the cart user

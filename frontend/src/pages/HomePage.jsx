@@ -30,7 +30,7 @@ function HomePage() {
           Discover the latest trends in eco-friendly fashion
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {categories.map((category) => (
             <CategoryItem key={category.name} category={category} />
           ))}

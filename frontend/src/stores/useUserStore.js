@@ -6,6 +6,7 @@ export const useUserStore = create((set, get) => ({
   user: null,
   loading: false,
   checkingAuth: true,
+  refreshingToken: false,
 
   signup: async ({ name, email, password, confirmPassword }) => {
     set({ loading: true });
@@ -58,6 +59,53 @@ export const useUserStore = create((set, get) => ({
       console.log(error.message);
     }
   },
+
+  refreshToken: async () => {
+    // Prevent multiple simultaneous refresh attempts
+    if (get().refreshingToken) return;
+
+    set({ refreshingToken: true });
+    try {
+      const res = await axios.post("/auth/refresh-token");
+    } catch (error) {
+      set({ user: null });
+      throw error;
+    } finally {
+      set({ refreshingToken: false });
+    }
+  },
 }));
 
-// TODO: create refresh token to create new access token after 15m
+// Axios interceptor for token refresh
+
+let refreshPromise = null;
+
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // If a refresh is already in progress, wait for it to complete
+        if (refreshPromise) {
+          await refreshPromise;
+          return axios(originalRequest);
+        }
+        // Start a new refresh process
+
+        refreshPromise = useUserStore.getState().refreshToken();
+        await refreshPromise;
+        refreshPromise = null;
+
+        return axios(originalRequest);
+      } catch (refreshError) {
+        // If refresh fails, redirect to login or handle as needed
+        useUserStore.getState().logout();
+        return Promise.reject(refreshError); // to send the error to the original request
+      }
+    }
+    return Promise.reject(error);
+  }
+);

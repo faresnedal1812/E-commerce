@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ProductCart from "./ProductCart";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { useCartStore } from "../stores/useCartStore";
 
@@ -91,7 +90,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
             className={`absolute top-1/2 -left-4 p-2 rounded-full transform -translate-y-1/2 transition-colors duration-200 ${
               isStartEnabled
                 ? "bg-gray-600 cursor-not-allowed"
-                : "bg-emerald-600 hover:bg-emerald-50"
+                : "bg-emerald-600 hover:bg-emerald-500 cursor-pointer"
             }`}
           >
             <ChevronLeft className="w-6 h-6" />
@@ -102,7 +101,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
             className={`absolute top-1/2 -right-4 p-2 rounded-full transform -translate-y-1/2 transition-colors duration-200 ${
               isEndEnabled
                 ? "bg-gray-600 cursor-not-allowed"
-                : "bg-emerald-600 hover:bg-emerald-50"
+                : "bg-emerald-600 hover:bg-emerald-500 cursor-pointer"
             }`}
           >
             <ChevronRight className="w-6 h-6" />

@@ -102,7 +102,7 @@ axios.interceptors.response.use(
         return axios(originalRequest);
       } catch (refreshError) {
         // If refresh fails, redirect to login or handle as needed
-        useUserStore.getState().logout();
+        useUserStore.setState({ user: null });
         return Promise.reject(refreshError); // to send the error to the original request
       }
     }
